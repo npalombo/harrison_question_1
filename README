@@ -1,0 +1,9 @@
+Get prequisite packages
+    sudo ./dev_initial_setup.sh
+
+Set up virtual environment
+    source ./dev_use_virtual_env.sh
+
+Execute script to output state data to state_data.json file
+    cd geodata
+    python fetch.py
