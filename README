@@ -1,9 +1,21 @@
-Get prequisite packages
+Get prequisite packages. Assumes setuptools is already installed.
     sudo ./dev_initial_setup.sh
 
 Set up virtual environment
     source ./dev_use_virtual_env.sh
 
 Execute script to output state data to state_data.json file
-    cd geodata
-    python fetch.py
+    ./vEnv/bin/python geodata/fetch.py
+
+Execute tests
+    ./run_tests.sh
+
+Successful test output:
+    (vEnv)jake:harrison_question_1 nick$ ./run_tests.sh
+    test_bad_state_exception (test_fetch.TestFetch) ... ok
+    test_get_state (test_fetch.TestFetch) ... ok
+
+    ----------------------------------------------------------------------
+    Ran 2 tests in 0.318s
+
+    OK

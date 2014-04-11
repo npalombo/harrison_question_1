@@ -50,7 +50,10 @@ def process_states(fp):
                 fp.write(',\n')
             state_info = dict()
             state_info['state'] = state
-            state_info['geodata'] = get_data_for_state(state)
+            geo_data = get_data_for_state(state)
+            if len(geo_data) == 0:
+                log.warning('Got empty data set for %s' % state)
+            state_info['geodata'] = geo_data
             # pretty print the dictionary in JSON format
             fp.write(json.dumps(state_info, sort_keys=True, indent=4, separators=(',', ': ')))
             wrote_one = True
