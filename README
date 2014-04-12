@@ -19,3 +19,7 @@ Successful test output:
     Ran 2 tests in 0.318s
 
     OK
+
+Running Djano web app
+    python manage.py syncdb
+    python manage.py runserver
