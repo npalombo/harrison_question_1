@@ -1,10 +1,7 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>{{ state }}</title>
-</head>
-<body>
-{{ state }}
+{% extends "base.html" %}
+
+{% block body %}
+<h1>{{ state }}</h1>
 {% regroup all_geodata by name as geodata_list %}
 <ul>
 {% for geodata in geodata_list %}
@@ -24,5 +21,4 @@
     </li>
 {% endfor %}
 </ul>
-</body>
-</html>
+{% endblock %}

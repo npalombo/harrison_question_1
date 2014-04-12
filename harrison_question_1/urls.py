@@ -13,5 +13,6 @@ urlpatterns = patterns('',
     url(r'^state/(?P<state>\w+)/$', 'webapp.views.detail', name='detail'),
 
     url(r'^accounts/login/$', 'django.contrib.auth.views.login'),
+    url(r'^logout/$', 'webapp.views.logout_page'),
     url(r'^admin/', include(admin.site.urls)),
 )
