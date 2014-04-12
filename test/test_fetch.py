@@ -1,6 +1,7 @@
 __author__ = 'nick'
 
 import unittest
+import types
 
 from geodata import fetch
 
@@ -14,11 +15,11 @@ class TestFetch(unittest.TestCase):
         '''
         Get the data for state IL. A list of dictionary objects should be returned.
         '''
-        state_info = fetch.get_data_for_state('IL')
-        self.assertIsNotNone(state_info)
-        self.assertTrue(isinstance(state_info, list))
-        self.assertTrue(len(state_info) > 0)
-        self.assertTrue(isinstance(state_info[0], dict))
+        geodata = fetch.get_data_for_state('IL')
+        self.assertIsNotNone(geodata)
+        self.assertTrue(isinstance(geodata, list))
+        self.assertTrue(len(geodata) > 0)
+        self.assertTrue(isinstance(geodata[0], dict))
 
     def _test_bad_state_exception(self):
         return fetch.get_data_for_state('FOOBAR')
@@ -30,6 +31,18 @@ class TestFetch(unittest.TestCase):
         with self.assertRaises(Exception):
             self._test_bad_state_exception()
 
+    def test_get_all_states(self):
+        '''
+        Get the generator to iterate over all state data
+        '''
+        all_state_info = fetch.get_data_for_all_states()
+        self.assertIsNotNone(all_state_info)
+        self.assertTrue(isinstance(all_state_info, types.GeneratorType))
+        # Test one element to see if it downloads
+        state_info = all_state_info.next()
+        self.assertTrue(isinstance(state_info, dict))
+        self.assertIn('state', state_info.keys())
+        self.assertIn('geodata', state_info.keys())
 
 if __name__ == "__main__":
     unittest.main()

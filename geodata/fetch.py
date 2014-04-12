@@ -35,6 +35,14 @@ def get_data_for_state(state):
         raise Exception(err)
 
 
+def get_data_for_all_states():
+    """
+        Yield a generator for iterating over all the states
+    """
+    for state in states:
+        yield({'state': state, 'geodata': get_data_for_state(state)})
+
+
 def process_states(fp):
     """
         Save state data to file
@@ -42,18 +50,14 @@ def process_states(fp):
     fp.write('[\n')
     # Iterate over list of states
     wrote_one = False
-    for state in states:
+    for state_info in get_data_for_all_states():
         try:
             # only write out the comma starting with the second record
             # as a way to prevent having a trailing comma in JSON output
             if wrote_one:
                 fp.write(',\n')
-            state_info = dict()
-            state_info['state'] = state
-            geo_data = get_data_for_state(state)
-            if len(geo_data) == 0:
-                log.warning('Got empty data set for %s' % state)
-            state_info['geodata'] = geo_data
+            if len(state_info['geodata']) == 0:
+                log.warning('Got empty data set for %s' % state_info['state'])
             # pretty print the dictionary in JSON format
             fp.write(json.dumps(state_info, sort_keys=True, indent=4, separators=(',', ': ')))
             wrote_one = True
@@ -62,6 +66,9 @@ def process_states(fp):
     fp.write('\n]\n')
 
 if __name__ == "__main__":
+    #
+    # Output all the state data to a file
+    #
     # set the logging level
     log.basicConfig(level=log.INFO,
                     format='%(asctime)s %(levelname)s %(message)s')

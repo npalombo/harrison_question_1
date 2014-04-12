@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ state }}</title>
+</head>
+<body>
+{{ state }}
+{% regroup all_geodata by name as geodata_list %}
+<ul>
+{% for geodata in geodata_list %}
+    <li>{{ geodata.grouper }}
+    <ul>
+    {% for geo_data_list_item in geodata.list %}
+        {% if geo_data_list_item.full_county_name %}<li>County Name: {{ geo_data_list_item.full_county_name }}</li>{% endif %}
+        {% if geo_data_list_item.description %}<li>Description: {{ geo_data_list_item.description }}</li>{% endif %}
+        {% if geo_data_list_item.feat_class%}<li>FEAT: {{ geo_data_list_item.feat_class }}</li>{% endif %}
+        {% if geo_data_list_item.fips_class%}<li>FIPS: {{ geo_data_list_item.fips_class }}</li>{% endif %}
+        {% if geo_data_list_item.primary_latitude and geo_data_list_item.primary_longitude%}
+            <li><a href="http://maps.google.com/maps?q={{ geo_data_list_item.primary_latitude }},{{ geo_data_list_item.primary_longitude }}">Map</a></a></li>
+        {% endif %}
+        {% if geo_data_list_item.url%}<li><a href="{{ geo_data_list_item.url }}">Home Page</a></li>{% endif %}
+    {% endfor %}
+    </ul>
+    </li>
+{% endfor %}
+</ul>
+</body>
+</html>
