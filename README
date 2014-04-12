@@ -1,4 +1,4 @@
-Get prequisite packages. Assumes setuptools is already installed.
+Get prequisite packages. Assumes setuptools is already installed and mysqld is running.
     sudo ./dev_initial_setup.sh
 
 Set up virtual environment
